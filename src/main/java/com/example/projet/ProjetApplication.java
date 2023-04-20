@@ -26,7 +26,7 @@ import java.sql.*;
 public class ProjetApplication extends Application{
 
     // REMPLACER "Projet29325" par le nom de la database contenant le schéma "Projet" sur votre ordi
-    private final String url = "jdbc:postgresql://localhost/projet2935?currentSchema=Projet";
+    private final String url = "jdbc:postgresql://localhost/Projet29325?currentSchema=Projet";
     private final String user = "postgres";  // METTRE LE "BON" USERNAME SI CE N'EST PAS LE MÊME
     private final String password = "sara";  // METTRE LE "VRAI" MOT DE PASSE
 
