@@ -6,6 +6,6 @@ import javafx.application.Application;
 public class Main {
     //MAIN EXECUTOR
     public static void main(String[] args) {
-        Application.launch(DynamicTable.class,args);
+        Application.launch(ProjetApplication.class,args);
     }
 }

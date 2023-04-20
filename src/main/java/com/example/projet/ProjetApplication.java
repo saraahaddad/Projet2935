@@ -8,7 +8,6 @@ import javafx.collections.ObservableList;
 import javafx.event.*;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
@@ -25,7 +24,7 @@ import java.sql.*;
  * aussi : une autre partie du code est reprise du fichier Requetes.java que j'avais fait
  */
 
-public class DynamicTable extends Application{
+public class ProjetApplication extends Application{
 
     // REMPLACER "projet2935" par le nom de la database contenant le schéma "Projet" (ou autre nom de schéma) sur votre ordi
     private final String url = "jdbc:postgresql://localhost/Projet29325?currentSchema=Projet";
