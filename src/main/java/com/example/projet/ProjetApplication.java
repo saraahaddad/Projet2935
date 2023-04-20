@@ -18,16 +18,15 @@ import java.sql.*;
 
 /**
  *
- * Application qui affiche avec JavaFX le résultat d'une requête SQL
- * source : https://stackoverflow.com/questions/18941093/how-to-fill-up-a-tableview-with-database-data/22032294#22032294
+ * Application qui affiche les 4 requêtes du projet.
+ * Affichage avec JavaFX et connexion à PostgreSQL avec JDBC.
  *
- * aussi : une autre partie du code est reprise du fichier Requetes.java que j'avais fait
  */
 
 public class ProjetApplication extends Application{
 
-    // REMPLACER "projet2935" par le nom de la database contenant le schéma "Projet" (ou autre nom de schéma) sur votre ordi
-    private final String url = "jdbc:postgresql://localhost/Projet29325?currentSchema=Projet";
+    // REMPLACER "Projet29325" par le nom de la database contenant le schéma "Projet" sur votre ordi
+    private final String url = "jdbc:postgresql://localhost/projet2935?currentSchema=Projet";
     private final String user = "postgres";  // METTRE LE "BON" USERNAME SI CE N'EST PAS LE MÊME
     private final String password = "sara";  // METTRE LE "VRAI" MOT DE PASSE
 
@@ -70,9 +69,9 @@ public class ProjetApplication extends Application{
 
 
     /**
-     * Connect to the PostgreSQL database
+     * Connexion à la base de donnée PostgreSQL.
      * source : https://www.postgresqltutorial.com/postgresql-jdbc/connecting-to-postgresql-database/
-     * @return a Connection object
+     * @return object Connection
      * @throws SQLException
      */
     public Connection connect() throws SQLException {
@@ -80,30 +79,18 @@ public class ProjetApplication extends Application{
     }
 
     /**
-     * obtient la requête sql passée en paramètre
+     * Effectue la requête passée en paramètre et construit la TableView
+     * avec les résultats de la requête.
+     * source : https://stackoverflow.com/a/22032294
+     * @param requete
+     * @param tableview
      */
-    public ResultSet requete(String question) {
-        try (Connection conn = connect();
-             Statement stmt = conn.createStatement();
-             ResultSet resultSet = stmt.executeQuery(question)) {
-            return(resultSet);
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-        return null;
-    }
-
-    public TableView tableFromResult(ResultSet rs) {
-        return null;
-    }
-
     public void buildTable(String requete, TableView tableview) {
         data = FXCollections.observableArrayList();
         try (Connection conn = connect();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(requete)) {
             for (int i = 0; i < rs.getMetaData().getColumnCount(); i++) {
-                //We are using non property style for making dynamic table
                 final int j = i;
                 TableColumn col = new TableColumn(rs.getMetaData().getColumnName(i + 1));
                 col.setSortable(false);
@@ -117,9 +104,7 @@ public class ProjetApplication extends Application{
                 tableview.getColumns().addAll(col);
             }
 
-            /********************************
-             * Data added to ObservableList *
-             ********************************/
+            // Data added to ObservableList
             while (rs.next()) {
                 //Iterate Row
                 ObservableList<String> row = FXCollections.observableArrayList();
@@ -132,8 +117,7 @@ public class ProjetApplication extends Application{
             //FINALLY ADDED TO TableView
             tableview.setItems(data);
 
-            // https://stackoverflow.com/questions/12933918/tableview-has-more-columns-than-specified/12950052#12950052
-            tableview.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+            tableview.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);  //https://stackoverflow.com/a/12950052
             tableview.setSelectionModel(null);  // https://stackoverflow.com/a/43392253
         } catch(Exception e) {
             e.printStackTrace();
@@ -144,7 +128,6 @@ public class ProjetApplication extends Application{
     @Override
     public void start(Stage stage) throws Exception {
         BorderPane bp = new BorderPane();
-        // http://www.java2s.com/Code/Java/JavaFX/SetPaddingforBorderPane.htm
         bp.setPadding(new Insets(10, 20, 10, 20));
 
         // 1 - top : titre
