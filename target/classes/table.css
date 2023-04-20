@@ -1,0 +1,10 @@
+/* http://fxexperience.com/2011/11/alternate-row-highlighting-in-empty-tableview-and-listview-rows/ */
+
+/*les lignes superflues seront blanches (=pas visible)*/
+.table-row-cell:empty {
+    -fx-background-color: white;
+}
+
+.table-row-cell:empty .table-cell {
+    -fx-border-width: 0px;
+}
